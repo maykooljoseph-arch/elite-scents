@@ -4,15 +4,12 @@ const path = require('path');
 const { initDB, getDB } = require('./database');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
-
-app.use(express.static(path.join(__dirname, '..', 'index.html')));
-
-
+app.use(express.static(path.join(__dirname, '..')));
 app.use('/admin', express.static(path.join(__dirname, 'admin')));
 
 const productsRoutes = require('./routes/products');
@@ -23,17 +20,13 @@ app.use('/api/products', productsRoutes);
 app.use('/api/orders', ordersRoutes);
 app.use('/api/auth', authRoutes);
 
-
 app.get('/api/stats', (req, res) => {
     try {
         const db = getDB();
-
         const totalProductos = db.exec('SELECT COUNT(*) FROM products')[0].values[0][0];
         const totalPedidos = db.exec('SELECT COUNT(*) FROM orders')[0].values[0][0];
-
         const pendientesResult = db.exec("SELECT COUNT(*) FROM orders WHERE status = 'pendiente'");
         const pedidosPendientes = pendientesResult[0].values[0][0];
-
         const entregadosResult = db.exec("SELECT COUNT(*) FROM orders WHERE status = 'entregado'");
         const pedidosEntregados = entregadosResult[0].values[0][0];
 
@@ -49,19 +42,13 @@ app.get('/api/stats', (req, res) => {
     }
 });
 
-// iniciar server
 async function start() {
-
     await initDB();
     console.log('Base de datos conectada.');
 
-    app.listen(PORT, () => {
-
+    app.listen(PORT, '0.0.0.0', () => {
         console.log('   ELITE SCENTS   ');
-        console.log('Tienda:  http://localhost:' + PORT);
-        console.log('Admin:   http://localhost:' + PORT + '/admin');
-        console.log('API:     http://localhost:' + PORT + '/api/products');
-
+        console.log('Puerto: ' + PORT);
     });
 }
 
