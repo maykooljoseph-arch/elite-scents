@@ -22,10 +22,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const product = await response.json();
 
         // Registrar el producto en el array global para que addToCart funcione
-        if (typeof products !== 'undefined' && !products.find(p => p._id === product._id)) {
+        if (typeof products !== 'undefined' && !products.find(p => String(p.id) === String(product.id))) {
             products.push(product);
         }
-        updateCartUI();
+        if (typeof updateCartUI === 'function') updateCartUI();
 
         const description = generateDescription(product);
         const whatsappBuyMsg = encodeURIComponent(`Hola Élite Scents, quiero comprar el *${product.name}* de ${product.price}.`);
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <div class="detail-price">${product.price}</div>
                 <p class="detail-description">${description}</p>
                 <div class="detail-actions">
-                    <button onclick="addToCart('${product._id}')" class="btn-buy"><i class="fas fa-shopping-cart"></i> Añadir al Carrito</button>
+                    <button onclick="addToCart('${product.id}')" class="btn-buy"><i class="fas fa-shopping-cart"></i> Añadir al Carrito</button>
                     <a href="${whatsappAskLink}" target="_blank" class="btn-consult">Consultar Dudas</a>
                 </div>
                 <p style="font-size: 12px; color: #666; margin-top: 10px;"><i class="fas fa-lock"></i> Compra 100% Segura. Pago contraentrega disponible.</p>
