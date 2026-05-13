@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="description"
+        content="Élite Scents - Perfumería árabe y de diseñador. Fragancias exclusivas con envío seguro a toda Colombia.">
+    <meta property="og:title" content="Élite Scents | Perfumería Exclusiva">
+    <meta property="og:description" content="Descubre nuestra colección de perfumes árabes y de diseñador.">
+    <meta property="og:type" content="website">
+    <title>Élite Scents | Perfumería Árabe</title>
+    <link rel=" icon" type="image/x-icon" href="logo.png">
+    <link rel="stylesheet" href="styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Jost:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="top-bar">
+        <div class="scrolling-text">
+            <span>🚚 ENVÍOS A TODO EL PAÍS &nbsp;&nbsp; • &nbsp;&nbsp; 💸 PAGOS CONTRAENTREGA &nbsp;&nbsp; •
+                &nbsp;&nbsp; ✨ CALIDAD 1.1 GARANTIZADA</span>
+            <span>🚚 ENVÍOS A TODO EL PAÍS &nbsp;&nbsp; • &nbsp;&nbsp; 💸 PAGOS CONTRAENTREGA &nbsp;&nbsp; •
+                &nbsp;&nbsp; ✨ CALIDAD 1.1 GARANTIZADA</span>
+        </div>
+    </div>
+    <header>
+        <nav class="nav">
+            <a href="#" class="logo"><img src="logo.png" alt="Élite Scents Logo"></a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </div>
+            <ul class="menu">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#catalogo">Catálogo</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="#" onclick="toggleCart(); return false;"><i class="fas fa-shopping-cart"></i> <span
+                            id="cart-count">0</span></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero" id="inicio">
+            <div class="hero-slides">
+                <div class="slide active"
+                    style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.3), #000), url('https://images.unsplash.com/photo-1594035910387-fea47794261f');">
+                </div>
+                <div class="slide"
+                    style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.3), #000), url('https://images.unsplash.com/photo-1615634260167-c8cdede054de');">
+                </div>
+                <div class="slide"
+                    style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.3), #000), url('https://images.unsplash.com/photo-1583063615569-7c4be2f622f6');">
+                </div>
+            </div>
+            <div class="hero-content">
+                <h1>Descubre tu Esencia Única</h1>
+                <p>Perfumes árabes y de diseñador que definen tu presencia.</p>
+                <a href="#catalogo" class="btn">Ver Colección</a>
+            </div>
+        </section>
+        <section class="features">
+            <div class="feature-item">
+                <i class="fas fa-hand-holding-dollar"></i>
+                <h3>Pago Contraentrega</h3>
+                <p>Paga al recibir en la puerta de tu casa.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Envío Seguro</h3>
+                <p>Garantizamos la entrega perfecta de tu perfume.</p>
+            </div>
+        </section>
+        <section id="catalogo">
+            <h2 class="section-title">Colección Exclusiva</h2>
+            <div class="filters-container">
+                <div class="search-box"><input type="text" id="searchInput" placeholder="Buscar perfume..."></div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">Todos</button>
+                    <button class="filter-btn" data-filter="Hombre">Hombre</button>
+                    <button class="filter-btn" data-filter="Mujer">Mujer</button>
+                    <button class="filter-btn" data-filter="Arabe">Árabe</button>
+                </div>
+            </div>
+            <div class="products"></div>
+        </section>
+        <section class="contact" id="contacto">
+            <h2 class="section-title">¿Te interesa alguno?</h2>
+            <p>Escríbenos por WhatsApp y te atenderemos de inmediato.</p>
+            <a href="https://wa.me/573015521919" target="_blank" class="btn btn-whatsapp"><i
+                    class="fab fa-whatsapp"></i> Contactar</a>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>Élite Scents</h4>
+                <p>Elevamos tu presencia con las fragancias más exclusivas.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces</h4>
+                <ul class="footer-links">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#catalogo">Catálogo</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Síguenos</h4>
+                <div class="social-links"><a
+                        href="https://www.instagram.com/elitescentsoficial?igsh=cnlzeGZ1OGEwZTU2&utm_source=qr"
+                        target="_blank"><i class="fab fa-instagram"></i></a><a
+                        href="https://www.tiktok.com/@perfumeriaelitescents" target="_blank"><i
+                            class="fab fa-tiktok"></i></a><a href="https://wa.me/573015521919" target="_blank"><i
+                            class="fab fa-whatsapp"></i></a></div>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 Élite Scents. Todos los derechos reservados.</div>
+    </footer>
+    <a href="https://wa.me/573015521919" class="wsp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://www.tiktok.com/@perfumeriaelitescents" class="tiktok-float" target="_blank"><i
+            class="fab fa-tiktok"></i></a>
+    <a href="https://www.instagram.com/elitescentsoficial?igsh=cnlzeGZ1OGEwZTU2&utm_source=qr" class="instagram-float"
+        target="_blank"><i class="fab fa-instagram"></i></a>
+
+
+
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Tu Carrito</h3>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        <div id="cart-items" class="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-total">Total: <span id="cart-total-price">$0</span></div>
+            <button class="btn-checkout" onclick="checkout()">Enviar Pedido <i class="fab fa-whatsapp"></i></button>
+            <button onclick="clearCart()"
+                style="background:none; border:none; color:#888; margin-top:10px; cursor:pointer; font-size:12px; text-decoration:underline;">Vaciar
+                Carrito</button>
+        </div>
+    </div>
+    <div id="cart-overlay" class="cart-overlay" onclick="toggleCart()"></div>
+
+
+    <div id="checkout-modal"
+        style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.8); z-index:10000; justify-content:center; align-items:center;">
+        <div
+            style="background:#1a1a1a; border:1px solid rgba(201,168,76,0.3); border-radius:16px; padding:30px; width:420px; max-width:90%; color:#fff;">
+            <h3 style="color:#c9a84c; margin-bottom:20px; font-family:'Cinzel',serif;">Datos de Envío</h3>
+            <input type="text" id="checkout-name" placeholder="Tu nombre completo"
+                style="width:100%; padding:12px; margin-bottom:12px; border:1px solid rgba(255,255,255,0.15); border-radius:8px; background:rgba(255,255,255,0.05); color:#fff; font-size:14px; font-family:'Jost',sans-serif;">
+            <input type="tel" id="checkout-phone" placeholder="Tu teléfono"
+                style="width:100%; padding:12px; margin-bottom:12px; border:1px solid rgba(255,255,255,0.15); border-radius:8px; background:rgba(255,255,255,0.05); color:#fff; font-size:14px; font-family:'Jost',sans-serif;">
+            <input type="text" id="checkout-address" placeholder="Dirección de entrega"
+                style="width:100%; padding:12px; margin-bottom:12px; border:1px solid rgba(255,255,255,0.15); border-radius:8px; background:rgba(255,255,255,0.05); color:#fff; font-size:14px; font-family:'Jost',sans-serif;">
+            <input type="text" id="checkout-city" placeholder="Ciudad"
+                style="width:100%; padding:12px; margin-bottom:16px; border:1px solid rgba(255,255,255,0.15); border-radius:8px; background:rgba(255,255,255,0.05); color:#fff; font-size:14px; font-family:'Jost',sans-serif;">
+            <button onclick="enviarPedido()"
+                style="width:100%; padding:14px; background:linear-gradient(135deg,#c9a84c,#b8942e); color:#000; border:none; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; font-family:'Jost',sans-serif; margin-bottom:10px;">Confirmar
+                Pedido <i class="fab fa-whatsapp"></i></button>
+            <button onclick="cerrarCheckout()"
+                style="width:100%; padding:10px; background:none; border:1px solid rgba(255,255,255,0.2); border-radius:8px; color:#888; cursor:pointer; font-family:'Jost',sans-serif;">Cancelar</button>
+        </div>
+    </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

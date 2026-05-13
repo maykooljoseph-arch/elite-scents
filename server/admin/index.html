@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Élite Scents</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+
+    <div id="login-screen" class="login-screen">
+        <div class="login-box">
+            <h1>Élite Scents</h1>
+            <p>Panel de Administración</p>
+            <form id="login-form">
+                <input type="text" id="login-user" placeholder="Usuario" required>
+                <input type="password" id="login-pass" placeholder="Contraseña" required>
+                <button type="submit">Entrar al Sistema</button>
+                <p id="login-error" class="error-msg" style="color: #e74c3c; margin-top: 15px; font-size: 0.9rem;"></p>
+            </form>
+        </div>
+    </div>
+
+
+    <div id="admin-panel" class="admin-panel" style="display:none;">
+
+
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Élite Scents</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-link active" data-section="dashboard">
+                    <i class="fas fa-th-large"></i> Resumen
+                </a>
+                <a href="#" class="nav-link" data-section="products">
+                    <i class="fas fa-gem"></i> Productos
+                </a>
+                <a href="#" class="nav-link" data-section="orders">
+                    <i class="fas fa-receipt"></i> Pedidos Realizados
+                </a>
+            </nav>
+            <button id="btn-logout" class="btn-logout">
+                <i class="fas fa-power-off"></i> Cerrar Sesión
+            </button>
+        </aside>
+
+
+        <main class="main-content">
+
+
+            <header class="top-header">
+                <h2 id="section-title">Élite Scents</h2>
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <span id="admin-username">admin</span>
+                </div>
+            </header>
+
+
+            <section id="section-dashboard" class="section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-box-open"></i>
+                        <div>
+                            <h3 id="stat-products">0</h3>
+                            <p>Catálogo Total</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-shopping-cart"></i>
+                        <div>
+                            <h3 id="stat-orders">0</h3>
+                            <p>Ventas Totales</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 50px; text-align: center; color: var(--gold); opacity: 0.5;">
+                    <i class="fas fa-crown" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                    <p style="font-family: 'Cinzel', serif; font-size: 1.2rem;"> centro de control de Élite
+                        Scents</p>
+                </div>
+            </section>
+
+
+            <section id="section-products" class="section">
+                <div class="section-header"
+                    style="margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
+                    <p style="color: var(--text-gray);">Gestiona el inventario de la tienda</p>
+                    <button id="btn-add-product" class="btn-primary">
+                        <i class="fas fa-plus"></i> Nuevo Perfume
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Categoría</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-table-body"></tbody>
+                    </table>
+                </div>
+
+
+                <div id="product-modal" class="modal"
+                    style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000; justify-content: center; align-items: center;">
+                    <div class="modal-content">
+                        <h3 id="modal-product-title">Agregar Producto</h3>
+                        <form id="product-form">
+                            <input type="hidden" id="product-id">
+                            <label>Nombre del Perfume:</label>
+                            <input type="text" id="product-name" required placeholder="Ej: Khamrah Lattafa">
+
+                            <label>Precio:</label>
+                            <input type="text" id="product-price" required placeholder="Ej: $120.000">
+
+                            <label>Ruta de la Imagen:</label>
+                            <input type="text" id="product-image" required placeholder="Ej: images/perfume.jpg">
+
+                            <label>Categoría:</label>
+                            <select id="product-category" required>
+                                <option value="Hombre">Caballero</option>
+                                <option value="Mujer">Dama</option>
+                                <option value="Arabe">Fragancia Árabe</option>
+                            </select>
+
+                            <div class="modal-buttons" style="display: flex; gap: 10px; margin-top: 10px;">
+                                <button type="submit" class="btn-primary" style="flex: 1;">Guardar Cambios</button>
+                                <button type="button" id="btn-cancel-product" class="btn-secondary"
+                                    style="background: rgba(255,255,255,0.1); color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; flex: 1;">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+
+            <section id="section-orders" class="section">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Teléfono</th>
+                                <th>Ciudad</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-table-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>

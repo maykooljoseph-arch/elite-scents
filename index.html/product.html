@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <title>Detalle del Producto | Élite Scents</title>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Jost:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <nav class="nav">
+            <a href="index.html" class="logo"><img src="logo.png" alt="Élite Scents Logo"></a>
+            <div style="display:flex; align-items:center; gap:20px;">
+                <a href="index.html" style="color: white; text-decoration: underline;">Volver al Catálogo</a>
+                <a href="#" onclick="toggleCart(); return false;"><i class="fas fa-shopping-cart"
+                        style="color:var(--primary-color); font-size:20px;"></i> <span id="cart-count">0</span></a>
+            </div>
+        </nav>
+    </header>
+    <main style="padding-top: 100px; min-height: 80vh;">
+        <div id="product-detail-container" class="product-detail-container">
+            <p style="text-align:center; color:white;">Cargando producto...</p>
+        </div>
+    </main>
+    <section class="features" style="padding: 40px 20px;">
+        <div class="feature-item"><i class="fas fa-hand-holding-dollar"></i>
+            <h3>Pago Contraentrega</h3>
+        </div>
+        <div class="feature-item"><i class="fas fa-shield-alt"></i>
+            <h3>Envío Seguro</h3>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>Élite Scents</h4>
+                <p>Elevamos tu presencia con las fragancias más exclusivas.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="index.html#catalogo">Catálogo</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 Élite Scents. Todos los derechos reservados.</div>
+    </footer>
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Tu Carrito</h3>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        <div id="cart-items" class="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-total">Total: <span id="cart-total-price">$0</span></div>
+            <button class="btn-checkout" onclick="checkout()">Enviar Pedido <i class="fab fa-whatsapp"></i></button>
+            <button onclick="clearCart()"
+                style="background:none; border:none; color:#888; margin-top:10px; cursor:pointer; font-size:12px; text-decoration:underline;">Vaciar
+                Carrito</button>
+        </div>
+    </div>
+    <div id="cart-overlay" class="cart-overlay" onclick="toggleCart()"></div>
+
+    <!-- Modal de Checkout -->
+    <div id="checkout-modal"
+        style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.8); z-index:10000; justify-content:center; align-items:center;">
+        <div
+            style="background:#1a1a1a; border:1px solid rgba(201,168,76,0.3); border-radius:16px; padding:30px; width:420px; max-width:90%; color:#fff;">
+            <h3 style="color:#c9a84c; margin-bottom:20px; font-family:'Cinzel',serif;">Datos de Envío</h3>
+            <input type="text" id="checkout-name" placeholder="Tu nombre completo"
+                style="width:100%; padding:12px; margin-bottom:12px; border:1px solid rgba(255,255,255,0.15); border-radius:8px; background:rgba(255,255,255,0.05); color:#fff; font-size:14px; font-family:'Jost',sans-serif;">
+            <input type="tel" id="checkout-phone" placeholder="Tu teléfono"
+                style="width:100%; padding:12px; margin-bottom:12px; border:1px solid rgba(255,255,255,0.15); border-radius:8px; background:rgba(255,255,255,0.05); color:#fff; font-size:14px; font-family:'Jost',sans-serif;">
+            <input type="text" id="checkout-address" placeholder="Dirección de entrega"
+                style="width:100%; padding:12px; margin-bottom:12px; border:1px solid rgba(255,255,255,0.15); border-radius:8px; background:rgba(255,255,255,0.05); color:#fff; font-size:14px; font-family:'Jost',sans-serif;">
+            <input type="text" id="checkout-city" placeholder="Ciudad"
+                style="width:100%; padding:12px; margin-bottom:16px; border:1px solid rgba(255,255,255,0.15); border-radius:8px; background:rgba(255,255,255,0.05); color:#fff; font-size:14px; font-family:'Jost',sans-serif;">
+            <button onclick="enviarPedido()"
+                style="width:100%; padding:14px; background:linear-gradient(135deg,#c9a84c,#b8942e); color:#000; border:none; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; font-family:'Jost',sans-serif; margin-bottom:10px;">Confirmar
+                Pedido <i class="fab fa-whatsapp"></i></button>
+            <button onclick="cerrarCheckout()"
+                style="width:100%; padding:10px; background:none; border:1px solid rgba(255,255,255,0.2); border-radius:8px; color:#888; cursor:pointer; font-family:'Jost',sans-serif;">Cancelar</button>
+        </div>
+    </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="product.js"></script>
+</body>
+
+</html>

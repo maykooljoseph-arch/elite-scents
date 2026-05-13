@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Élite Scents</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+
+    <div id="login-screen" class="login-screen">
+        <div class="login-box">
+            <h1><i class="fas fa-lock"></i> Admin Panel</h1>
+            <p>Élite Scents - Panel de Administración</p>
+            <form id="login-form">
+                <input type="text" id="login-user" placeholder="Usuario" required>
+                <input type="password" id="login-pass" placeholder="Contraseña" required>
+                <button type="submit">Iniciar Sesión</button>
+                <p id="login-error" class="error-msg"></p>
+            </form>
+        </div>
+    </div>
+
+
+    <div id="admin-panel" class="admin-panel" style="display:none;">
+
+
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Élite Scents</h2>
+                <small>Admin Panel</small>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-link active" data-section="dashboard">
+                    <i class="fas fa-chart-bar"></i> Dashboard
+                </a>
+                <a href="#" class="nav-link" data-section="products">
+                    <i class="fas fa-box"></i> Productos
+                </a>
+                <a href="#" class="nav-link" data-section="orders">
+                    <i class="fas fa-shopping-bag"></i> Pedidos
+                </a>
+            </nav>
+            <button id="btn-logout" class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </button>
+        </aside>
+
+
+        <main class="main-content">
+
+
+            <header class="top-header">
+                <h2 id="section-title">Dashboard</h2>
+                <span id="admin-username">admin</span>
+            </header>
+
+
+            <section id="section-dashboard" class="section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-box"></i>
+                        <div>
+                            <h3 id="stat-products">0</h3>
+                            <p>Productos</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-shopping-bag"></i>
+                        <div>
+                            <h3 id="stat-orders">0</h3>
+                            <p>Total Pedidos</p>
+                        </div>
+                    </div>
+                    <div class="stat-card warning">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h3 id="stat-pending">0</h3>
+                            <p>Pendientes</p>
+                        </div>
+                    </div>
+                    <div class="stat-card success">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <h3 id="stat-delivered">0</h3>
+                            <p>Entregados</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section id="section-products" class="section">
+                <div class="section-header">
+                    <button id="btn-add-product" class="btn-primary">
+                        <i class="fas fa-plus"></i> Agregar Producto
+                    </button>
+                </div>
+
+
+                <div id="product-modal" class="modal" style="display:none;">
+                    <div class="modal-content">
+                        <h3 id="modal-product-title">Agregar Producto</h3>
+                        <form id="product-form">
+                            <input type="hidden" id="product-id">
+                            <label>Nombre:</label>
+                            <input type="text" id="product-name" required>
+                            <label>Precio (ej: $90.000):</label>
+                            <input type="text" id="product-price" required>
+                            <label>URL de imagen:</label>
+                            <input type="text" id="product-image" required>
+                            <label>Categoría:</label>
+                            <select id="product-category" required>
+                                <option value="Hombre">Hombre</option>
+                                <option value="Mujer">Mujer</option>
+                                <option value="Arabe">Árabe</option>
+                            </select>
+                            <div class="modal-buttons">
+                                <button type="submit" class="btn-primary">Guardar</button>
+                                <button type="button" id="btn-cancel-product" class="btn-secondary">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Categoría</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-table-body">
+
+                    </tbody>
+                </table>
+            </section>
+
+
+            <section id="section-orders" class="section">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Teléfono</th>
+                            <th>Ciudad</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-table-body">
+
+                    </tbody>
+                </table>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>
