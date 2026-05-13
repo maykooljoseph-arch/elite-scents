@@ -1,46 +1,27 @@
-// rutas para productos
 const express = require('express');
 const router = express.Router();
-const { getDB, guardarDB } = require('../database');
+const { getDB } = require('../database');
+const { ObjectId } = require('mongodb'); // Necesario para buscar por ID
 
 // Obtener todos los productos con filtros opcionales
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const db = getDB();
         const { category, search } = req.query;
 
-        let sql = 'SELECT * FROM products';
-        let condiciones = [];
-        let params = [];
+        let query = {};
 
+        // Filtro de categoría
         if (category && category !== 'all') {
-            condiciones.push('category = ?');
-            params.push(category);
+            query.category = category;
         }
 
+        // Filtro de búsqueda (Buscador)
         if (search) {
-            condiciones.push('name LIKE ?');
-            params.push('%' + search + '%');
+            query.name = { $regex: search, $options: 'i' }; // 'i' es para que no importe mayúsculas/minúsculas
         }
 
-        if (condiciones.length > 0) {
-            sql += ' WHERE ' + condiciones.join(' AND ');
-        }
-
-        const result = db.exec(sql, params);
-
-        if (result.length === 0) {
-            return res.json([]);
-        }
-
-        //  resultado a array de objetos
-        const columns = result[0].columns;
-        const productos = result[0].values.map(row => {
-            const obj = {};
-            columns.forEach((col, i) => { obj[col] = row[i]; });
-            return obj;
-        });
-
+        const productos = await db.collection('products').find(query).toArray();
         res.json(productos);
     } catch (error) {
         console.error('Error al obtener productos:', error);
@@ -48,30 +29,25 @@ router.get('/', (req, res) => {
     }
 });
 
-//  Obtener un producto por su id
-router.get('/:id', (req, res) => {
+// Obtener un producto por su id
+router.get('/:id', async (req, res) => {
     try {
         const db = getDB();
-        const result = db.exec('SELECT * FROM products WHERE id = ?', [req.params.id]);
+        const producto = await db.collection('products').findOne({ _id: new ObjectId(req.params.id) });
 
-        if (result.length === 0 || result[0].values.length === 0) {
+        if (!producto) {
             return res.status(404).json({ error: 'Producto no encontrado' });
         }
-
-        const columns = result[0].columns;
-        const row = result[0].values[0];
-        const producto = {};
-        columns.forEach((col, i) => { producto[col] = row[i]; });
 
         res.json(producto);
     } catch (error) {
         console.error('Error al obtener producto:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
+        res.status(500).json({ error: 'ID no válido o error de servidor' });
     }
 });
 
-//  Crear un nuevo producto
-router.post('/', (req, res) => {
+// Crear un nuevo producto
+router.post('/', async (req, res) => {
     try {
         const db = getDB();
         const { name, price, image, category } = req.body;
@@ -80,14 +56,14 @@ router.post('/', (req, res) => {
             return res.status(400).json({ error: 'Todos los campos son obligatorios' });
         }
 
-        db.run('INSERT INTO products (name, price, image, category) VALUES (?, ?, ?, ?)', [name, price, image, category]);
-        guardarDB();
+        const nuevoProducto = { name, price: Number(price), image, category };
+        const result = await db.collection('products').insertOne(nuevoProducto);
 
-        // Obtener el id del producto recién creado
-        const lastId = db.exec('SELECT last_insert_rowid() as id');
-        const id = lastId[0].values[0][0];
-
-        res.json({ id, name, price, image, category, message: 'Producto creado exitosamente' });
+        res.json({ 
+            _id: result.insertedId, 
+            ...nuevoProducto, 
+            message: 'Producto creado exitosamente' 
+        });
     } catch (error) {
         console.error('Error al crear producto:', error);
         res.status(500).json({ error: 'Error interno del servidor' });
@@ -95,19 +71,19 @@ router.post('/', (req, res) => {
 });
 
 // Actualizar un producto
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
     try {
         const db = getDB();
         const { name, price, image, category } = req.body;
 
-        const existe = db.exec('SELECT id FROM products WHERE id = ?', [req.params.id]);
-        if (existe.length === 0 || existe[0].values.length === 0) {
+        const result = await db.collection('products').updateOne(
+            { _id: new ObjectId(req.params.id) },
+            { $set: { name, price: Number(price), image, category } }
+        );
+
+        if (result.matchedCount === 0) {
             return res.status(404).json({ error: 'Producto no encontrado' });
         }
-
-        db.run('UPDATE products SET name = ?, price = ?, image = ?, category = ? WHERE id = ?',
-            [name, price, image, category, req.params.id]);
-        guardarDB();
 
         res.json({ message: 'Producto actualizado exitosamente' });
     } catch (error) {
@@ -116,18 +92,16 @@ router.put('/:id', (req, res) => {
     }
 });
 
-//  Eliminar un producto
-router.delete('/:id', (req, res) => {
+// Eliminar un producto
+router.delete('/:id', async (req, res) => {
     try {
         const db = getDB();
 
-        const existe = db.exec('SELECT id FROM products WHERE id = ?', [req.params.id]);
-        if (existe.length === 0 || existe[0].values.length === 0) {
+        const result = await db.collection('products').deleteOne({ _id: new ObjectId(req.params.id) });
+
+        if (result.deletedCount === 0) {
             return res.status(404).json({ error: 'Producto no encontrado' });
         }
-
-        db.run('DELETE FROM products WHERE id = ?', [req.params.id]);
-        guardarDB();
 
         res.json({ message: 'Producto eliminado exitosamente' });
     } catch (error) {
