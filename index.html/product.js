@@ -1,4 +1,5 @@
-// Api para cargar prooductos
+// Api para cargar productos
+const API_BASE = 'https://elite-scentselite-scents-api.onrender.com';
 
 document.addEventListener('DOMContentLoaded', async () => {
     const params = new URLSearchParams(window.location.search);
@@ -11,14 +12,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-        // Cargar el producto desde la API
-        const response = await fetch('/api/products/' + productId);
+        // Cargar el producto desde la API (URL absoluta para que funcione desde Vercel)
+        const response = await fetch(API_BASE + '/api/products/' + productId);
 
         if (!response.ok) {
             throw new Error('Producto no encontrado');
         }
 
         const product = await response.json();
+
+        // Registrar el producto en el array global para que addToCart funcione
+        if (typeof products !== 'undefined' && !products.find(p => p._id === product._id)) {
+            products.push(product);
+        }
+        updateCartUI();
 
         const description = generateDescription(product);
         const whatsappBuyMsg = encodeURIComponent(`Hola Élite Scents, quiero comprar el *${product.name}* de ${product.price}.`);
