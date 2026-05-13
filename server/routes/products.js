@@ -19,6 +19,17 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/:id', async (req, res) => {
+    try {
+        const db = getDB();
+        const producto = await db.collection('products').findOne({ _id: new ObjectId(req.params.id) });
+        if (!producto) return res.status(404).json({ error: 'Producto no encontrado' });
+        res.json(producto);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 router.post('/', async (req, res) => {
     try {
         const db = getDB();

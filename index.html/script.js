@@ -56,7 +56,7 @@ function renderProducts() {
         productArticle.style.position = 'relative';
 
         const formattedPrice = formatPrice(product.price);
-        const detailLink = `product.html?id=${product.id}`;
+        const detailLink = `product.html?id=${product._id}`;
 
         productArticle.innerHTML = `
             <a href="${detailLink}" style="text-decoration:none; color:inherit; flex-grow: 1; display: flex; flex-direction: column;">
@@ -64,7 +64,7 @@ function renderProducts() {
                 <h3 style="flex-grow: 1;">${product.name}</h3>
                 <p class="price" style="margin-top: auto; font-size: 1.2rem; margin-bottom: 15px;">${formattedPrice}</p>
             </a>
-            <button onclick="addToCart(${product.id})" class="product-btn" style="margin-top: auto;">Añadir al Carrito</button>
+            <button onclick="addToCart('${product._id}')" class="product-btn" style="margin-top: auto;">Añadir al Carrito</button>
         `;
         productsContainer.appendChild(productArticle);
     });
@@ -145,7 +145,7 @@ function toggleCart() {
 }
 
 function addToCart(id) {
-    const product = products.find(p => p.id === id);
+    const product = products.find(p => p._id === id);
     if (product) {
         cart.push(product);
         saveCart();

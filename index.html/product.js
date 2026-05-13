@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', async () => {
     const params = new URLSearchParams(window.location.search);
-    const productId = parseInt(params.get('id'));
+    const productId = params.get('id');
     const container = document.getElementById('product-detail-container');
 
     if (!productId) {
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <div class="detail-price">${product.price}</div>
                 <p class="detail-description">${description}</p>
                 <div class="detail-actions">
-                    <button onclick="addToCart(${product.id})" class="btn-buy"><i class="fas fa-shopping-cart"></i> Añadir al Carrito</button>
+                    <button onclick="addToCart('${product._id}')" class="btn-buy"><i class="fas fa-shopping-cart"></i> Añadir al Carrito</button>
                     <a href="${whatsappAskLink}" target="_blank" class="btn-consult">Consultar Dudas</a>
                 </div>
                 <p style="font-size: 12px; color: #666; margin-top: 10px;"><i class="fas fa-lock"></i> Compra 100% Segura. Pago contraentrega disponible.</p>
