@@ -21,7 +21,7 @@ function formatPrice(priceInput) {
 // subir productos desde la api
 async function cargarProductos() {
     try {
-        const response = await fetch('/api/products');
+        const response = await fetch('https://elite-scentselite-scents-api.onrender.com/api/products');
         products = await response.json();
         console.log('Productos cargados desde la API:', products.length);
     } catch (error) {
@@ -244,7 +244,7 @@ async function enviarPedido() {
 
     // Guardar pedido en el backend
     try {
-        await fetch('/api/orders', {
+        await fetch('https://elite-scentselite-scents-api.onrender.com/api/orders', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
